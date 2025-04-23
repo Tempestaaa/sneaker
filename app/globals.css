@@ -1,26 +1,53 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-destructive: var(--destructive);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+
+  --background: oklch(0.99 0.0045 314.81);
+  --foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --muted: oklch(0.269 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+}
+
+@layer base {
+  * {
+    @apply border-muted duration-300;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .flex-center {
+    @apply flex items-center;
+  }
+  .grid-center {
+    @apply grid place-items-center-safe;
+  }
 }
