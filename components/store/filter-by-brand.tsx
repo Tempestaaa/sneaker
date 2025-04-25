@@ -1,6 +1,6 @@
 "use client";
 
-import brands from "@/data/brands";
+import { BRANDS } from "@/types/brand";
 import { ChevronsDownIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -10,19 +10,13 @@ export default function FilterByBrand() {
   const { replace } = useRouter();
 
   const brand = searchParams.get("brand")?.split("-").join(" ");
-  const stock = searchParams.get("stock");
 
-  const handleBrandQuery = (brand: string, inStock: number) => {
+  const handleBrandQuery = (brand: string) => {
     const params = new URLSearchParams(searchParams);
     brand = brand.toLowerCase().split(" ").join("-");
 
-    if (brand) {
-      params.set("brand", brand);
-      params.set("stock", inStock.toString());
-    } else {
-      params.delete("brand");
-      params.delete("stock");
-    }
+    if (brand) params.set("brand", brand);
+    else params.delete("brand");
 
     replace(`${pathname}?${params.toString()}`);
   };
@@ -34,16 +28,18 @@ export default function FilterByBrand() {
       <div className="flex flex-col gap-2">
         <input type="radio" id="show-more" hidden className="peer" />
 
-        <ul className="max-h-40 overflow-hidden peer-checked:max-h-fit">
-          {brands.map(({ name, inStock }, id) => {
-            const isActive =
-              name.toLowerCase() === brand && inStock.toString() === stock;
+        <ul
+          role="list"
+          className="max-h-40 overflow-hidden peer-checked:max-h-fit"
+        >
+          {BRANDS.map((item) => {
+            const isActive = item.toLowerCase() === brand;
 
             return (
               <li
-                key={id}
-                onClick={() => handleBrandQuery(name, inStock)}
-                className={`flex-center hover:text-background hover:bg-foreground px-2 py-1 ${
+                key={item}
+                onClick={() => handleBrandQuery(item)}
+                className={`flex-center hover:text-background hover:bg-foreground px-2 py-1 cursor-pointer ${
                   isActive && "text-background bg-foreground"
                 }`}
               >
@@ -53,8 +49,7 @@ export default function FilterByBrand() {
                   }`}
                 />
 
-                <p>{name}</p>
-                <p className="ml-auto">{`(${inStock})`}</p>
+                <p>{item}</p>
               </li>
             );
           })}

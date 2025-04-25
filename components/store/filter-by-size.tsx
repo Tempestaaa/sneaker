@@ -21,7 +21,7 @@ export default function FilterBySize() {
     <section className="space-y-4">
       <header className="text-xl font-semibold">Size</header>
 
-      <ul className="grid grid-cols-4 gap-2">
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(44px,1fr))] gap-2">
         {[...Array(10)].map((_, id) => {
           const isActive = size === (id + 40).toString();
 

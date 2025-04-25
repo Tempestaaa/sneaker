@@ -2,11 +2,18 @@ import StoreFilter from "@/components/store/store-filter";
 import StorePreview from "@/components/store/store-preview";
 import StoreProducts from "@/components/store/store-products";
 
-export default function StorePage() {
+type Props = {
+  searchParams: Promise<{ brand: string }>;
+};
+
+export default async function StorePage({ searchParams }: Props) {
+  let { brand } = await searchParams;
+  brand = brand?.split("-").join(" ");
+
   return (
-    <section className="flex gap-8">
+    <section className="flex gap-12">
       <StoreFilter />
-      <StoreProducts />
+      <StoreProducts filteredBrand={brand} />
       <StorePreview />
     </section>
   );
