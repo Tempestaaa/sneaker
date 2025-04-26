@@ -1,17 +1,28 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { Product } from "@/types/product";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 
-type storeContextType = {};
+type storeContextType = {
+  preview: Product | undefined;
+  setPreview: Dispatch<SetStateAction<Product | undefined>>;
+};
 
-export const storeContext = createContext<storeContextType>({});
+export const StoreContext = createContext<storeContextType>({
+  preview: undefined,
+  setPreview: () => {},
+});
 
 export const StoreContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState<Product>();
 
-  return <storeContext.Provider value={{}}>{children}</storeContext.Provider>;
+  return (
+    <StoreContext.Provider value={{ preview, setPreview }}>
+      {children}
+    </StoreContext.Provider>
+  );
 };

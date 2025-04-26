@@ -1,7 +1,8 @@
+import PreviewButton from "@/components/product/preview-button";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { Product } from "@/types/product";
-import { EyeIcon, MinusIcon, ShoppingCartIcon } from "lucide-react";
+import { MinusIcon, ShoppingCartIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -37,10 +38,7 @@ export default function ProductCard({ product }: Props) {
         <div className="flex-center gap-4 justify-between font-medium">
           <p className="text-xl">{formatCurrency(price, "VND")}</p>
           <div className="flex-center gap-2">
-            <Button variant="ghost">
-              <EyeIcon className="size-4" />
-              <p>Preview</p>
-            </Button>
+            <PreviewButton product={product} />
 
             <Button variant="ghost">
               <ShoppingCartIcon className="size-4" />
